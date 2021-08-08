@@ -1,3 +1,56 @@
+<?php
+
+$host="localhost";
+$user="root";
+$password="";
+$db="user";
+
+session_start();
+
+//verbindung mit der Database
+$data=mysqli_connect($host,$user,$password,$db);
+if($data===false)
+{
+    die("connection error");
+}
+
+//post request
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+    $username=$_POST["username"];
+    $password=$_POST["password"];
+
+
+    $sql="select * from login where username='".$username."' AND password='".$password."' ";
+
+    $result=mysqli_query($data,$sql); //Um die Abfrage jetzt auch auszuführen und die dabei erhaltenen Daten in einer Variable zu speichern verwenden wir den Befehl mysqli_query
+
+    $row=mysqli_fetch_array($result);
+
+    if($row["usertype"]=="user")
+    {
+
+        $_SESSION["username"]=$username;
+
+        header("location:user.php");
+    }
+
+    elseif($row["usertype"]=="admin")
+    {
+
+        $_SESSION["username"]=$username;
+
+        header("location:admin.php");
+    }
+
+    else
+    {
+        echo "username or password incorrect";
+    }
+
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,31 +59,31 @@
 </head>
 <h1>Login Form</h1>
 <center>
-<div>
-<!--INSERT INTO `login` (`id`, `username`, `password`, `usertype`) VALUES (NULL, 'admin', 'winnie', 'user');-->
-    <form action="#" method="POST">
+    <div>
+        <!--INSERT INTO `login` (`id`, `username`, `password`, `usertype`) VALUES (NULL, 'admin', 'winnie', 'user');-->
+        <form action="#" method="POST">
 
-        <div>
-            <label>username</label>
-            <input type="text" name="username" required>
-        </div>
-        <br><br>
+            <div>
+                <label>username</label>
+                <input type="text" name="username" required>
+            </div>
+            <br><br>
 
-        <div>
-            <label>password</label>
-            <input type="password" name="password" required>
-        </div>
-        <br><br>
+            <div>
+                <label>password</label>
+                <input type="password" name="password" required>
+            </div>
+            <br><br>
 
-        <div>
+            <div>
 
-            <input type="submit" value="Login">
-        </div>
+                <input type="submit" value="Login">
+            </div>
 
 
-    </form>
+        </form>
 
-</div>
+    </div>
 </center
 </body>
 </html>

@@ -4,10 +4,14 @@ $host="localhost";
 $user="root";
 $password="";
 $db="user";
-
+/**
+ * Variable declaration wird geprüft
+ */
 session_start();
+/**
+ * verbindung mit der Database
+ */
 
-//verbindung mit der Database
 $data=mysqli_connect($host,$user,$password,$db);
 if($data===false)
 {
@@ -23,10 +27,17 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
     $sql="select * from login where username='".$username."' AND password='".$password."' ";
 
-    $result=mysqli_query($data,$sql); //Um die Abfrage jetzt auch auszuführen und die dabei erhaltenen Daten in einer Variable zu speichern verwenden wir den Befehl mysqli_query
+    /**
+     * Um die Abfrage jetzt auch auszuführen und die dabei erhaltenen Daten in einer Variable
+     * zu speichern verwenden wir den Befehl mysqli_query
+     */
+    $result=mysqli_query($data,$sql); //envois une requete a une base de donnee
 
-    $row=mysqli_fetch_array($result);
+    $row=mysqli_fetch_array($result);//retourne une ligne de résultat sous la forme d’un tableau.
 
+    /**
+     * user
+     */
     if($row["usertype"]=="user")
     {
 
@@ -34,6 +45,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
         header("location:user.php");
     }
+    /**
+     * admin
+     */
 
     elseif($row["usertype"]=="admin")
     {

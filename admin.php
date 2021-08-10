@@ -1,8 +1,12 @@
 <?php
+/**
+ *  erzeugt eine Session oder nimmt die aktuelle wieder auf
+ */
 session_start();
-
-
-if(!isset($_SESSION["username"]))
+/**
+ * Variable declaration wird geprüft
+ */
+if(!isset($_SESSION["username"])) //return true false der angegebene Wert existiert
 {
     header("location:login.php");
 }
@@ -16,7 +20,8 @@ if(!isset($_SESSION["username"]))
 </head>
 <body>
 
-<h1>THIS IS ADMIN HOME PAGE</h1><?php echo $_SESSION["username"] ?>
+<!--Username wird angezeigt-->
+<h1>ADMIN SEITE</h1><?php echo $_SESSION["username"] ?>
 
 <a href="logout.php">Logout</a>
 </body>
